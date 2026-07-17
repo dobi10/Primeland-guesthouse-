@@ -1,28 +1,22 @@
-// Firebase imports
-
-import { db } from "./firebase.js";
-
-import { 
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+// PrimeLand Guesthouse script.js
 
 
-
-
-// Mobile menu
+// Mobile Menu
 
 const menuBtn = document.querySelector(".menu-btn");
 
 const navLinks = document.querySelector(".nav-links");
 
 
+if(menuBtn){
+
 menuBtn.addEventListener("click",()=>{
 
     navLinks.classList.toggle("active");
 
 });
+
+}
 
 
 
@@ -41,84 +35,92 @@ document.querySelectorAll(".nav-links a").forEach(link=>{
 
 
 
-// Booking Form Firebase
+// WhatsApp Booking System
 
 
 const bookingForm = document.getElementById("bookingForm");
 
 
-bookingForm.addEventListener("submit", async (e)=>{
+if(bookingForm){
 
 
-    e.preventDefault();
+bookingForm.addEventListener("submit",(e)=>{
 
 
-
-    const bookingData = {
-
-        name: document.getElementById("name").value,
-
-        phone: document.getElementById("phone").value,
-
-        date: document.getElementById("date").value,
-
-        room: document.getElementById("room").value,
-
-        message: document.getElementById("message").value,
-
-        createdAt: serverTimestamp()
-
-    };
+e.preventDefault();
 
 
 
-    try{
+const name = document.getElementById("name").value;
 
+const phone = document.getElementById("phone").value;
 
-        await addDoc(
+const date = document.getElementById("date").value;
 
-            collection(db,"bookings"),
+const room = document.getElementById("room").value;
 
-            bookingData
-
-        );
-
-
-        alert(
-        "Thank you! Your booking request was sent successfully."
-        );
-
-
-        bookingForm.reset();
+const message = document.getElementById("message").value;
 
 
 
-    }
+const whatsappMessage = `
+
+Hello PrimeLand Guesthouse,
+
+I would like to make a booking request.
+
+👤 Name: ${name}
+
+📞 Phone: ${phone}
+
+📅 Booking Date: ${date}
+
+🛏 Room: ${room}
+
+💬 Message: ${message}
 
 
-    catch(error){
+Thank you.
+
+`;
 
 
-        console.log(error);
+
+const whatsappNumber = "251987770238";
 
 
-        alert(
-        "Something went wrong. Please try again."
-        );
+
+const whatsappURL =
+
+"https://wa.me/" +
+
+whatsappNumber +
+
+"?text=" +
+
+encodeURIComponent(whatsappMessage);
 
 
-    }
+
+window.open(whatsappURL,"_blank");
+
+
+
+bookingForm.reset();
 
 
 
 });
 
 
+}
 
 
 
 
-// Scroll animation
+
+
+// Scroll Animation
 
 
 const sections = document.querySelectorAll("section");
@@ -126,26 +128,29 @@ const sections = document.querySelectorAll("section");
 
 sections.forEach(section=>{
 
-    section.style.opacity="0";
 
-    section.style.transform="translateY(40px)";
+section.style.opacity="0";
 
-    section.style.transition="0.8s";
+section.style.transform="translateY(40px)";
+
+section.style.transition="0.8s ease";
+
 
 });
 
 
 
-window.addEventListener("scroll",()=>{
+
+function revealSections(){
 
 
 sections.forEach(section=>{
 
 
-let top = section.getBoundingClientRect().top;
+const position = section.getBoundingClientRect().top;
 
 
-if(top < window.innerHeight - 100){
+if(position < window.innerHeight - 100){
 
 
 section.style.opacity="1";
@@ -156,8 +161,14 @@ section.style.transform="translateY(0)";
 }
 
 
-
 });
 
 
-});
+}
+
+
+
+window.addEventListener("scroll", revealSections);
+
+
+revealSections();
