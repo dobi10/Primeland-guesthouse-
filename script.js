@@ -1,4 +1,5 @@
-// PrimeLand Guesthouse JavaScript
+// PrimeLand Guesthouse script.js
+
 
 
 // Mobile Menu
@@ -34,8 +35,7 @@ navLinks.classList.remove("active");
 
 
 
-
-// WhatsApp Booking
+// WhatsApp Booking System
 
 
 const bookingForm = document.getElementById("bookingForm");
@@ -51,29 +51,20 @@ e.preventDefault();
 
 
 
-const name =
-document.getElementById("name").value;
+const name = document.getElementById("name").value;
 
+const phone = document.getElementById("phone").value;
 
-const phone =
-document.getElementById("phone").value;
+const date = document.getElementById("date").value;
 
+const room = document.getElementById("room").value;
 
-const date =
-document.getElementById("date").value;
-
-
-const room =
-document.getElementById("room").value;
-
-
-const message =
-document.getElementById("message").value;
+const message = document.getElementById("message").value;
 
 
 
 
-const text = `
+const whatsappMessage = `
 
 Hello PrimeLand Guesthouse,
 
@@ -96,11 +87,10 @@ Thank you.
 
 
 
-
 const whatsappNumber = "251987770238";
 
 
-const whatsappLink =
+const whatsappURL =
 
 "https://wa.me/" +
 
@@ -108,12 +98,11 @@ whatsappNumber +
 
 "?text=" +
 
-encodeURIComponent(text);
+encodeURIComponent(whatsappMessage);
 
 
 
-window.open(whatsappLink,"_blank");
-
+window.open(whatsappURL,"_blank");
 
 
 bookingForm.reset();
@@ -131,7 +120,59 @@ bookingForm.reset();
 
 
 
-// Scroll reveal animation
+// Gallery Lightbox
+
+
+const galleryImages = document.querySelectorAll(".gallery img");
+
+
+galleryImages.forEach(image=>{
+
+
+image.addEventListener("click",()=>{
+
+
+const lightbox = document.createElement("div");
+
+
+lightbox.className="lightbox";
+
+
+lightbox.innerHTML = `
+
+<img src="${image.src}">
+
+<span>×</span>
+
+`;
+
+
+
+document.body.appendChild(lightbox);
+
+
+
+lightbox.addEventListener("click",()=>{
+
+
+lightbox.remove();
+
+
+});
+
+
+});
+
+
+});
+
+
+
+
+
+
+
+// Scroll Animation
 
 
 const sections = document.querySelectorAll("section");
@@ -139,11 +180,13 @@ const sections = document.querySelectorAll("section");
 
 sections.forEach(section=>{
 
+
 section.style.opacity="0";
 
 section.style.transform="translateY(40px)";
 
 section.style.transition="0.8s ease";
+
 
 });
 
@@ -155,9 +198,7 @@ function reveal(){
 sections.forEach(section=>{
 
 
-const position =
-section.getBoundingClientRect().top;
-
+const position = section.getBoundingClientRect().top;
 
 
 if(position < window.innerHeight - 100){
@@ -169,7 +210,6 @@ section.style.transform="translateY(0)";
 
 
 }
-
 
 
 });
